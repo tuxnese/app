@@ -78,27 +78,20 @@ export default {
 			const srcField = this.viewOptions.src || null;
 
 			if (srcField) {
-				const source = this.$store.state.settings.values.asset_url_naming;
-				let sourcePath = null;
-
-				if (this.fields[srcField] && this.fields[srcField].type.toLowerCase() === 'file') {
-					sourcePath = item[srcField]?.[source];
-				}
+				let file = item[srcField];
 
 				if (srcField === 'data' && this.fields[srcField].collection === 'directus_files') {
-					if (item.type.startsWith('image') === false) return null;
-
-					if (item.type === 'image/svg+xml') {
-						return item.data.url;
-					}
-					sourcePath = item?.[source];
+					file = item;
 				}
 
-				if (!sourcePath) return null;
+				if (file.type.startsWith('image') === false) return null;
+
+				if (file.type.includes('svg')) return file.data.asset_url;
 
 				const fit = this.viewOptions.fit || 'crop';
 
-				return `/${this.currentProjectKey}/assets/${sourcePath}?key=directus-medium-${fit}`;
+				return file.data.thumbnails.find(thumb => thumb.key === `directus-medium-${fit}`)
+					?.url;
 			}
 
 			return null;
