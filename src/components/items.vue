@@ -147,8 +147,13 @@ export default {
 		},
 		fields() {
 			const fields = this.$store.state.collections[this.collection].fields;
+			const sortedValues = Object.values(fields).sort((a, b) => (a.sort < b.sort ? -1 : 1));
+			const sortedFields = {};
+			for (let field of sortedValues) {
+				sortedFields[field.field] = field;
+			}
 			return (
-				mapValues(fields, field => ({
+				mapValues(sortedFields, field => ({
 					...field,
 					name: this.$helpers.formatField(field.field, field.collection)
 				})) || {}
