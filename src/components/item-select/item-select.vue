@@ -292,7 +292,7 @@ export default {
 			}
 
 			if (this.filters.length > 0) {
-				params.filters = formatFilters(this.filters);
+				Object.assign(params, formatFilters(this.filters));
 			}
 
 			if (this.collection === 'directus_files') {
