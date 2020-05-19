@@ -80,9 +80,11 @@ export default {
 			if (srcField) {
 				let file = item[srcField];
 
-				if (srcField === 'data' && this.fields[srcField].collection === 'directus_files') {
+				if (srcField === 'data' && this.collection === 'directus_files') {
 					file = item;
 				}
+
+				if (!file) return null;
 
 				if (file.type.startsWith('image') === false) return null;
 
