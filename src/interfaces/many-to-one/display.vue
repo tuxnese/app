@@ -1,9 +1,10 @@
 <template>
-	<div class="no-wrap">{{ displayValue }}</div>
+	<div :class="['badge', 'no-wrap']" :style="style">{{ displayValue }}</div>
 </template>
 
 <script>
 import mixin from '@directus/extension-toolkit/mixins/interface';
+import { get, has } from 'lodash';
 
 export default {
 	mixins: [mixin],
@@ -27,6 +28,30 @@ export default {
 			}
 
 			return '--';
+		},
+		style() {
+			let value = this.value;
+			let background_color = 'inherit';
+			let text_color = 'inherit';
+
+			if (
+				!!this.options.backgroundColorField &&
+				has(value, this.options.backgroundColorField) &&
+				get(value, this.options.backgroundColorField) != ''
+			) {
+				background_color = get(value, this.options.backgroundColorField);
+			}
+			if (
+				!!this.options.textColorField &&
+				has(value, this.options.textColorField) &&
+				get(value, this.options.textColorField) != ''
+			) {
+				text_color = get(value, this.options.textColorField);
+			}
+			return {
+				backgroundColor: background_color,
+				color: text_color
+			};
 		},
 		isPrimaryKey() {
 			return typeof this.value !== 'object';
@@ -57,3 +82,15 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.badge {
+	border-radius: var(--border-radius);
+	padding: 5px 8px 4px;
+	font-weight: var(--weight-bold);
+	display: block;
+	cursor: default;
+	max-width: max-content;
+	text-overflow: ellipsis;
+}
+</style>

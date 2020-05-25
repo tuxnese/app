@@ -13,6 +13,22 @@
         "placeholder": "$t:template_placeholder"
       }
     },
+    "backgroundColorField": {
+      "name": "$t:background_color",
+      "comment": "$t:background_color_comment",
+      "interface": "text-input",
+      "options": {
+        "placeholder": "$t:background_color_placeholder"
+      }
+    },
+    "textColorField": {
+      "name": "$t:text_color",
+      "comment": "$t:text_color_comment",
+      "interface": "text-input",
+      "options": {
+        "placeholder": "$t:text_color_placeholder"
+      }
+    },
     "visible_fields": {
       "name": "$t:visible_fields",
       "comment": "$t:visible_fields_note",
